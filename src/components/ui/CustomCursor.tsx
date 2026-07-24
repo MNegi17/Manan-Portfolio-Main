@@ -7,7 +7,7 @@ import { useCursor } from "@/src/context/CursorContext";
 export const CustomCursor = () => {
   const { cursorType, cursorText } = useCursor();
   const [isVisible, setIsVisible] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -17,18 +17,20 @@ export const CustomCursor = () => {
   const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    // Detect touch / mobile / tablet devices and disable custom cursor completely
-    const checkTouch = () => {
-      const isCoarse = window.matchMedia("(pointer: coarse)").matches;
-      const isMobileWidth = window.innerWidth < 768;
-      const hasTouchEvents = "ontouchstart" in window;
-      return isCoarse || isMobileWidth || hasTouchEvents;
+    // Only disable custom cursor on small mobile screen viewports (<768px)
+    const checkMobile = () => {
+      return window.innerWidth < 768;
     };
 
-    if (checkTouch()) {
-      setIsTouchDevice(true);
-      return;
+    if (checkMobile()) {
+      setIsMobileScreen(true);
+    } else {
+      setIsMobileScreen(false);
     }
+
+    const handleResize = () => {
+      setIsMobileScreen(checkMobile());
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -40,17 +42,19 @@ export const CustomCursor = () => {
       setIsVisible(false);
     };
 
+    window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [mouseX, mouseY, isVisible]);
 
-  // Disable custom cursor on touch/mobile/tablet devices
-  if (isTouchDevice || !isVisible) return null;
+  // Disable custom cursor on mobile viewports (<768px), keep 100% active on desktop (>=768px)
+  if (isMobileScreen || !isVisible) return null;
 
   // Variants for cursor states
   const getVariants = () => {

@@ -9,10 +9,8 @@
 }
 
 @layer base {
-  @media (hover: hover) and (pointer: fine) {
-    * {
-      cursor: none !important;
-    }
+  * {
+    cursor: none !important;
   }
 
   html, body {
