@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCursor } from "@/src/context/CursorContext";
@@ -116,9 +115,9 @@ export const Projects = () => {
         scrollTrigger: {
           trigger: section,
           pin: true,
-          scrub: 1,
+          scrub: 0.5, // Faster, smoother hardware scrub
           start: "top top",
-          end: () => `+=${getScrollAmount() + 400}`,
+          end: () => `+=${getScrollAmount() + 200}`,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const progress = self.progress;
@@ -126,7 +125,8 @@ export const Projects = () => {
               Math.floor(progress * (homepageProjects.length + 1)),
               homepageProjects.length
             );
-            setActiveIndex(index);
+            // Functional update prevents unnecessary React re-renders unless index changes!
+            setActiveIndex((prev) => (prev !== index ? index : prev));
           },
         },
       });
@@ -165,27 +165,21 @@ export const Projects = () => {
       <div className="my-auto w-full overflow-hidden flex items-center">
         <div
           ref={trackRef}
-          className="flex items-center gap-8 md:gap-12 px-6 sm:px-12 md:px-24 w-max"
+          className="flex items-center gap-8 md:gap-12 px-6 sm:px-12 md:px-24 w-max will-change-transform transform-gpu"
         >
           {/* 4 Main Featured Projects */}
           {homepageProjects.map((project, index) => {
             const isSpotlight = index === activeIndex;
 
             return (
-              <motion.div
+              <div
                 key={project.id}
-                animate={{
-                  scale: isSpotlight ? 1 : 0.93,
-                  opacity: isSpotlight ? 1 : 0.45,
-                  filter: isSpotlight ? "brightness(1)" : "brightness(0.7)",
-                }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
                 onMouseEnter={() => setCursor("project", "VIEW")}
                 onMouseLeave={resetCursor}
-                className={`relative w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[58vw] max-w-5xl shrink-0 p-6 sm:p-10 rounded-3xl glass-card border transition-all duration-500 overflow-hidden shadow-2xl ${
+                className={`relative w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[58vw] max-w-5xl shrink-0 p-6 sm:p-10 rounded-3xl border transition-all duration-300 transform-gpu overflow-hidden shadow-2xl ${
                   isSpotlight
-                    ? "border-white/50 shadow-[0_0_60px_rgba(255,255,255,0.12)] bg-[#0d0d0d]/95"
-                    : "border-neutral-800 bg-[#0a0a0a]/80"
+                    ? "scale-100 opacity-100 brightness-100 border-white/50 shadow-[0_0_50px_rgba(255,255,255,0.15)] bg-[#0e0e0e]"
+                    : "scale-[0.93] opacity-40 brightness-75 border-neutral-800 bg-[#0a0a0a]"
                 }`}
               >
                 {isSpotlight && (
@@ -234,7 +228,7 @@ export const Projects = () => {
                 {/* 2-Column Split */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
-                    <div className="relative w-full aspect-[16/10] rounded-2xl border border-dashed border-neutral-700 bg-neutral-950/90 overflow-hidden flex flex-col items-center justify-center p-6 text-center shadow-inner">
+                    <div className="relative w-full aspect-[16/10] rounded-2xl border border-dashed border-neutral-700 bg-neutral-950 overflow-hidden flex flex-col items-center justify-center p-6 text-center shadow-inner">
                       <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px]" />
 
                       <div className="relative z-10 flex flex-col items-center gap-2.5">
@@ -296,21 +290,21 @@ export const Projects = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
 
           {/* Dedicated "More Projects" CTA Card with Aesthetic Upward Arrow */}
-          <motion.div
-            animate={{
-              scale: activeIndex === 4 ? 1 : 0.93,
-              opacity: activeIndex === 4 ? 1 : 0.6,
-            }}
+          <div
             onMouseEnter={() => setCursor("magnetic")}
             onMouseLeave={resetCursor}
-            className="w-[70vw] sm:w-[50vw] md:w-[40vw] lg:w-[32vw] max-w-md shrink-0 h-[480px] rounded-3xl glass-card border border-neutral-800 hover:border-white transition-all duration-500 flex flex-col justify-between p-8 md:p-10 group bg-[#0d0d0d]/95 text-white shadow-2xl relative overflow-hidden"
+            className={`w-[70vw] sm:w-[50vw] md:w-[40vw] lg:w-[32vw] max-w-md shrink-0 h-[480px] rounded-3xl border transition-all duration-300 transform-gpu flex flex-col justify-between p-8 md:p-10 group text-white shadow-2xl relative overflow-hidden ${
+              activeIndex === 4
+                ? "scale-100 opacity-100 border-white bg-[#0e0e0e]"
+                : "scale-[0.93] opacity-50 border-neutral-800 bg-[#0a0a0a]"
+            }`}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
             <div className="flex justify-between items-center">
               <span className="font-mono text-xs px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 font-semibold">
@@ -340,7 +334,7 @@ export const Projects = () => {
               <span>OPEN ALL PROJECTS PAGE</span>
               <ArrowUpRight className="w-4 h-4" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
 
