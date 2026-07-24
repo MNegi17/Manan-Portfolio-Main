@@ -42,22 +42,22 @@ export const Navbar = () => {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
+      className="fixed top-4 sm:top-6 left-0 right-0 z-50 flex justify-center px-3 sm:px-4"
     >
-      <nav className="glass-panel flex items-center justify-between w-full max-w-6xl px-6 py-3.5 rounded-full border border-white/10 shadow-2xl backdrop-blur-xl bg-black/40">
+      <nav className="glass-panel flex items-center justify-between w-full max-w-6xl px-3.5 sm:px-6 py-2.5 sm:py-3.5 rounded-full border border-white/10 shadow-2xl backdrop-blur-xl bg-black/50 overflow-hidden">
         {/* Left Logo */}
         <a
           href="#"
           onMouseEnter={() => setCursor("magnetic")}
           onMouseLeave={resetCursor}
-          className="group flex items-center gap-2 font-display text-lg font-black tracking-tighter text-white"
+          className="group flex items-center gap-1.5 sm:gap-2 font-display text-sm sm:text-lg font-black tracking-tighter text-white shrink-0"
         >
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-white group-hover:scale-150 transition-transform duration-300" />
+          <span className="inline-block w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white group-hover:scale-150 transition-transform duration-300" />
           MANAN
         </a>
 
-        {/* Right Navigation */}
-        <div className="flex items-center gap-1 sm:gap-6">
+        {/* Right Navigation Links - Horizontally responsive on mobile */}
+        <div className="flex items-center gap-1 sm:gap-4 overflow-x-auto no-scrollbar ml-2">
           {navItems.map((item) => (
             <a
               key={item.name}
@@ -65,7 +65,7 @@ export const Navbar = () => {
               onClick={(e) => handleScroll(e, item.href)}
               onMouseEnter={() => setCursor("pointer")}
               onMouseLeave={resetCursor}
-              className="relative px-3 py-1.5 text-xs sm:text-sm font-mono text-neutral-400 hover:text-white transition-colors duration-200 group"
+              className="relative px-1.5 sm:px-3 py-1 text-[11px] sm:text-sm font-mono text-neutral-400 hover:text-white transition-colors duration-200 shrink-0 group"
             >
               <span>{item.name}</span>
               <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-300" />

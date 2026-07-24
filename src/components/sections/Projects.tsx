@@ -97,6 +97,9 @@ export const Projects = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    // Only initialize GSAP horizontal pinned scroll on desktop (window width >= 768px)
+    if (window.innerWidth < 768) return;
+
     gsap.registerPlugin(ScrollTrigger);
 
     const section = sectionRef.current;
@@ -115,7 +118,7 @@ export const Projects = () => {
         scrollTrigger: {
           trigger: section,
           pin: true,
-          scrub: 0.5, // Faster, smoother hardware scrub
+          scrub: 0.5,
           start: "top top",
           end: () => `+=${getScrollAmount() + 200}`,
           invalidateOnRefresh: true,
@@ -125,7 +128,6 @@ export const Projects = () => {
               Math.floor(progress * (homepageProjects.length + 1)),
               homepageProjects.length
             );
-            // Functional update prevents unnecessary React re-renders unless index changes!
             setActiveIndex((prev) => (prev !== index ? index : prev));
           },
         },
@@ -139,7 +141,7 @@ export const Projects = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative min-h-screen w-full bg-noise text-white overflow-hidden flex flex-col justify-between py-12"
+      className="relative min-h-screen w-full bg-noise text-white overflow-hidden flex flex-col justify-between py-12 md:py-16"
     >
       {/* Section Top Header */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-neutral-800 pb-6 mb-8">
@@ -152,8 +154,8 @@ export const Projects = () => {
           </h2>
         </div>
         <div className="flex items-center gap-4 mt-4 md:mt-0 font-mono text-xs text-neutral-400">
-          <span>SCROLL DOWN TO EXPLORE</span>
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-white font-semibold">
+          <span className="hidden md:inline-block">SCROLL DOWN TO EXPLORE</span>
+          <div className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-white font-semibold">
             <span>0{Math.min(activeIndex + 1, 4)}</span>
             <span className="text-neutral-600">/</span>
             <span className="text-neutral-500">04</span>
@@ -161,8 +163,123 @@ export const Projects = () => {
         </div>
       </div>
 
-      {/* Horizontal Cards Scroll Track */}
-      <div className="my-auto w-full overflow-hidden flex items-center">
+      {/* MOBILE LAYOUT (<768px): Native Vertical Clean Cards */}
+      <div className="md:hidden px-4 space-y-8 my-4">
+        {homepageProjects.map((project) => (
+          <div
+            key={project.id}
+            className="w-full p-5 sm:p-8 rounded-2xl border border-neutral-800 bg-[#0e0e0e] shadow-xl space-y-6"
+          >
+            {/* Top Bar */}
+            <div className="flex justify-between items-center pb-3 border-b border-neutral-800">
+              <span className="font-mono text-xs px-2.5 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-white font-bold">
+                PROJECT {project.number}
+              </span>
+
+              <div className="flex items-center gap-2">
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full bg-neutral-900 border border-neutral-800 text-white"
+                  >
+                    <Code className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {project.demoUrl && (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1 rounded-full bg-white text-black font-mono text-xs font-bold flex items-center gap-1"
+                  >
+                    <span>DEMO</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Media Placeholder Box */}
+            <div className="relative w-full aspect-[16/10] rounded-xl border border-dashed border-neutral-700 bg-neutral-950 flex flex-col items-center justify-center p-4 text-center">
+              <div className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 mb-2">
+                {project.icon}
+              </div>
+              <span className="font-mono text-xs text-neutral-300 font-semibold uppercase">
+                [ MEDIA PLACEHOLDER ]
+              </span>
+            </div>
+
+            {/* Project Details */}
+            <div>
+              <span className="font-mono text-[11px] text-neutral-400 uppercase block mb-1">
+                {project.category}
+              </span>
+              <h3 className="font-display text-2xl font-black text-white mb-2">
+                {project.title}
+              </h3>
+              <p className="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
+                {project.description}
+              </p>
+
+              {/* Highlights */}
+              <div className="space-y-1.5 mb-4 border-t border-b border-neutral-900 py-3">
+                {project.highlights.map((h, i) => (
+                  <div key={i} className="flex items-start gap-2 font-mono text-[11px] text-neutral-400">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white mt-1 shrink-0" />
+                    <span>{h}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="font-mono text-[10px] px-2 py-1 rounded bg-neutral-900 border border-neutral-800 text-neutral-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Mobile More Projects CTA Card */}
+        <div className="w-full p-6 rounded-2xl border border-white/40 bg-[#0e0e0e] shadow-2xl flex flex-col justify-between space-y-6">
+          <div className="flex justify-between items-center">
+            <span className="font-mono text-xs px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-300 font-semibold">
+              ARCHIVE
+            </span>
+            <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center">
+              <ArrowUpRight className="w-6 h-6" />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="font-display text-3xl font-black text-white">
+              More Projects
+            </h3>
+            <p className="font-mono text-xs text-neutral-400 leading-relaxed">
+              Explore full portfolio of analytics dashboards, machine learning models, and ETL pipelines in 2-card grid view.
+            </p>
+          </div>
+
+          <Link
+            href="/projects"
+            className="w-full py-3.5 rounded-full bg-white text-black font-mono text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2"
+          >
+            <span>OPEN ALL PROJECTS</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+
+      {/* DESKTOP LAYOUT (>=768px): Horizontal GSAP Track */}
+      <div className="hidden md:flex my-auto w-full overflow-hidden items-center">
         <div
           ref={trackRef}
           className="flex items-center gap-8 md:gap-12 px-6 sm:px-12 md:px-24 w-max will-change-transform transform-gpu"
@@ -294,7 +411,7 @@ export const Projects = () => {
             );
           })}
 
-          {/* Dedicated "More Projects" CTA Card with Aesthetic Upward Arrow */}
+          {/* Desktop "More Projects" CTA Card */}
           <div
             onMouseEnter={() => setCursor("magnetic")}
             onMouseLeave={resetCursor}
@@ -338,8 +455,8 @@ export const Projects = () => {
         </div>
       </div>
 
-      {/* Progress Dots Indicator */}
-      <div className="w-full max-w-7xl mx-auto px-4 flex justify-center items-center gap-2 mt-4">
+      {/* Progress Dots Indicator (Desktop only) */}
+      <div className="hidden md:flex w-full max-w-7xl mx-auto px-4 justify-center items-center gap-2 mt-4">
         {[...homepageProjects, null].map((_, i) => (
           <div
             key={i}
