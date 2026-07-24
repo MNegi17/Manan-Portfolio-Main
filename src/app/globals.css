@@ -9,10 +9,12 @@
 }
 
 @layer base {
-  * {
-    cursor: none !important;
+  @media (hover: hover) and (pointer: fine) {
+    * {
+      cursor: none !important;
+    }
   }
-  
+
   html, body {
     background-color: var(--background);
     color: var(--foreground);
