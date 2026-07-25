@@ -168,19 +168,19 @@ export const Projects = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative min-h-screen w-full bg-noise text-white overflow-hidden flex flex-col justify-between py-12 md:py-16"
+      className="relative min-h-screen w-full bg-noise text-white overflow-hidden flex flex-col justify-between pt-16 md:pt-20 pb-4 md:pb-6"
     >
       {/* Section Top Header */}
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-neutral-800 pb-6 mb-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-neutral-800 pb-3 md:pb-4 mb-3 md:mb-5 shrink-0">
         <div>
-          <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-2">
+          <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-1">
             // FEATURED SHOWCASE
           </span>
-          <h2 className="font-display text-4xl sm:text-6xl font-bold tracking-tight text-white">
+          <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-none">
             PROJECTS
           </h2>
         </div>
-        <div className="flex items-center gap-4 mt-4 md:mt-0 font-mono text-xs text-neutral-400">
+        <div className="flex items-center gap-4 mt-3 md:mt-0 font-mono text-xs text-neutral-400">
           <span className="hidden md:inline-block">SCROLL DOWN TO EXPLORE</span>
           <div className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-white font-semibold">
             <span>0{Math.min(activeIndex + 1, 4)}</span>
@@ -302,7 +302,7 @@ export const Projects = () => {
       <div className="hidden md:flex my-auto w-full overflow-hidden items-center">
         <div
           ref={trackRef}
-          className="flex items-center gap-8 md:gap-12 px-6 sm:px-12 md:px-24 w-max will-change-transform transform-gpu"
+          className="flex items-center gap-6 md:gap-10 px-6 sm:px-12 md:px-20 w-max will-change-transform transform-gpu"
         >
           {/* 4 Main Featured Projects */}
           {homepageProjects.map((project, index) => {
@@ -313,10 +313,10 @@ export const Projects = () => {
                 key={project.id}
                 onMouseEnter={() => setCursor("project", "VIEW")}
                 onMouseLeave={resetCursor}
-                className={`relative w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[58vw] max-w-5xl shrink-0 p-6 sm:p-10 rounded-3xl border transition-all duration-300 transform-gpu overflow-hidden shadow-2xl ${
+                className={`relative w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[56vw] max-w-4xl shrink-0 p-5 md:p-6 lg:p-7 rounded-3xl border transition-all duration-300 transform-gpu overflow-hidden shadow-2xl ${
                   isSpotlight
                     ? "scale-100 opacity-100 brightness-100 border-white/50 shadow-[0_0_50px_rgba(255,255,255,0.15)] bg-[#0e0e0e]"
-                    : "scale-[0.93] opacity-40 brightness-75 border-neutral-800 bg-[#0a0a0a]"
+                    : "scale-[0.94] opacity-40 brightness-75 border-neutral-800 bg-[#0a0a0a]"
                 }`}
               >
                 {isSpotlight && (
@@ -324,9 +324,9 @@ export const Projects = () => {
                 )}
 
                 {/* Top Bar */}
-                <div className="flex justify-between items-center mb-6 pb-4 border-b border-neutral-800">
+                <div className="flex justify-between items-center mb-4 pb-3 border-b border-neutral-800">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-white font-bold tracking-wider">
+                    <span className="font-mono text-xs px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-white font-bold tracking-wider">
                       PROJECT {project.number}
                     </span>
                     <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest hidden sm:inline-block">
@@ -363,26 +363,26 @@ export const Projects = () => {
                 </div>
 
                 {/* 2-Column Split */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                  <div className="lg:col-span-6 flex flex-col justify-between space-y-3">
                     {/* Interactive Photo Carousel */}
                     <ProjectImageGallery images={project.images} title={project.title} icon={project.icon} />
 
-                    <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
+                    <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white leading-tight">
                       {project.title}
                     </h3>
                   </div>
 
-                  <div className="lg:col-span-5 flex flex-col justify-between space-y-4 lg:pl-2">
+                  <div className="lg:col-span-6 flex flex-col justify-between space-y-3 lg:pl-1">
                     <div>
-                      <span className="font-mono text-xs text-neutral-400 font-semibold tracking-wider uppercase block mb-2">
+                      <span className="font-mono text-xs text-neutral-400 font-semibold tracking-wider uppercase block mb-1">
                         // OVERVIEW & IMPACT
                       </span>
-                      <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed mb-4">
+                      <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed mb-3">
                         {project.description}
                       </p>
 
-                      <div className="space-y-2 mb-6 border-t border-b border-neutral-900 py-3">
+                      <div className="space-y-1.5 mb-4 border-t border-b border-neutral-900 py-2.5">
                         {project.highlights.map((h, i) => (
                           <div key={i} className="flex items-start gap-2 font-mono text-[11px] text-neutral-400">
                             <span className="w-1.5 h-1.5 rounded-full bg-white mt-1 shrink-0" />
@@ -393,10 +393,10 @@ export const Projects = () => {
                     </div>
 
                     <div>
-                      <span className="font-mono text-[11px] text-neutral-400 tracking-wider uppercase block mb-2 font-semibold">
+                      <span className="font-mono text-[11px] text-neutral-400 tracking-wider uppercase block mb-1 font-semibold">
                         STACK & TECHNOLOGIES:
                       </span>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5">
                         {project.tags.map((tag) => (
                           <span
                             key={tag}
@@ -417,28 +417,28 @@ export const Projects = () => {
           <div
             onMouseEnter={() => setCursor("magnetic")}
             onMouseLeave={resetCursor}
-            className={`w-[70vw] sm:w-[50vw] md:w-[40vw] lg:w-[32vw] max-w-md shrink-0 h-[480px] rounded-3xl border transition-all duration-300 transform-gpu flex flex-col justify-between p-8 md:p-10 group text-white shadow-2xl relative overflow-hidden ${
+            className={`w-[70vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] max-w-sm shrink-0 rounded-3xl border transition-all duration-300 transform-gpu flex flex-col justify-between p-6 md:p-8 group text-white shadow-2xl relative overflow-hidden ${
               activeIndex === 4
                 ? "scale-100 opacity-100 border-white bg-[#0e0e0e]"
-                : "scale-[0.93] opacity-50 border-neutral-800 bg-[#0a0a0a]"
+                : "scale-[0.94] opacity-50 border-neutral-800 bg-[#0a0a0a]"
             }`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-6">
               <span className="font-mono text-xs px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 font-semibold">
                 ARCHIVE
               </span>
-              <div className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-110 group-hover:bg-neutral-200 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                <ArrowUpRight className="w-7 h-7 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-110 group-hover:bg-neutral-200 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+                <ArrowUpRight className="w-6 h-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </div>
             </div>
 
-            <div className="my-auto space-y-4">
+            <div className="my-auto space-y-3">
               <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
                 // EXPLORE FULL PORTFOLIO
               </span>
-              <h3 className="font-display text-4xl sm:text-5xl font-black tracking-tight leading-none text-white">
+              <h3 className="font-display text-3xl sm:text-4xl font-black tracking-tight leading-none text-white">
                 More Projects
               </h3>
               <p className="font-mono text-xs text-neutral-400 leading-relaxed">
@@ -448,7 +448,7 @@ export const Projects = () => {
 
             <Link
               href="/projects"
-              className="w-full py-4 rounded-full bg-white text-black font-mono text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-2 group-hover:bg-neutral-200 transition-colors shadow-lg"
+              className="w-full py-3.5 mt-6 rounded-full bg-white text-black font-mono text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-2 group-hover:bg-neutral-200 transition-colors shadow-lg"
             >
               <span>OPEN ALL PROJECTS PAGE</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -458,7 +458,7 @@ export const Projects = () => {
       </div>
 
       {/* Progress Dots Indicator (Desktop only) */}
-      <div className="hidden md:flex w-full max-w-7xl mx-auto px-4 justify-center items-center gap-2 mt-4">
+      <div className="hidden md:flex w-full max-w-7xl mx-auto px-4 justify-center items-center gap-2 mt-2">
         {[...homepageProjects, null].map((_, i) => (
           <div
             key={i}

@@ -20,7 +20,7 @@ export const ProjectImageGallery: React.FC<ProjectImageGalleryProps> = ({
 
   if (!images || images.length === 0) {
     return (
-      <div className="relative w-full aspect-[16/10] rounded-2xl border border-dashed border-neutral-700 bg-neutral-950 overflow-hidden flex flex-col items-center justify-center p-6 text-center shadow-inner">
+      <div className="relative w-full aspect-[16/9] rounded-2xl border border-dashed border-neutral-700 bg-neutral-950 overflow-hidden flex flex-col items-center justify-center p-6 text-center shadow-inner">
         <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px]" />
         <div className="relative z-10 flex flex-col items-center gap-2">
           <div className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-400">
@@ -46,7 +46,7 @@ export const ProjectImageGallery: React.FC<ProjectImageGalleryProps> = ({
 
   return (
     <>
-      <div className="relative w-full aspect-[16/10] rounded-2xl border border-neutral-800 bg-neutral-950 overflow-hidden group shadow-xl my-3 select-none">
+      <div className="relative w-full aspect-[16/9] rounded-2xl border border-neutral-800 bg-neutral-950 overflow-hidden group shadow-xl my-2 select-none">
         {/* Main Active Image */}
         <div
           className="relative w-full h-full cursor-pointer"
