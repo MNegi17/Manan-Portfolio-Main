@@ -4,8 +4,9 @@ import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCursor } from "@/src/context/CursorContext";
-import { ArrowUpRight, Code, Database, BarChart3, Bot, Sparkles, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Code, Database, BarChart3, Bot, Sparkles, ExternalLink, Globe } from "lucide-react";
 import Link from "next/link";
+import { ProjectImageGallery } from "@/src/components/ui/ProjectImageGallery";
 
 interface ProjectItem {
   id: string;
@@ -15,26 +16,34 @@ interface ProjectItem {
   description: string;
   highlights: string[];
   tags: string[];
+  images?: string[];
   demoUrl?: string;
   githubUrl?: string;
   icon: React.ReactNode;
 }
 
-// 4 Featured Projects for Homepage
+// 4 Featured Projects for Homepage in Exact Requested Sequence
 const homepageProjects: ProjectItem[] = [
   {
     id: "project-01",
     number: "01",
-    title: "Dyno Dashboard",
+    title: "DynoDashboard",
     category: "Business Intelligence & Visualization",
     description:
       "High-performance real-time sales analytics dashboard with division tracking, ASP trends, return-rate insights, and interactive target vs. achievement visualizations.",
     highlights: [
-      "Enabled non-technical stakeholders to self-serve sales and ASP trends",
+      "Enabled non-technical stakeholders to self-serve sales & return data",
       "Consolidated FY25-26 revenue metrics across 98,500+ units",
       "Interactive KPI cards with zero manual compilation overhead",
     ],
     tags: ["Power BI", "DAX", "SQL", "Python", "MIS Reporting"],
+    images: [
+      "/projects/Dyno%20Dashboard/Dyno-Dashboard_1.png",
+      "/projects/Dyno%20Dashboard/Dyno-Dashboard_2.png",
+      "/projects/Dyno%20Dashboard/Dyno-Dashboard_3.png",
+      "/projects/Dyno%20Dashboard/Dyno-Dashboard_4.png",
+      "/projects/Dyno%20Dashboard/Dyno-Dashboard_5.png",
+    ],
     demoUrl: "https://dyno-dashboard.vercel.app/",
     githubUrl: "https://github.com/MNegi17/Dyno-Dashboard",
     icon: <BarChart3 className="w-5 h-5 text-white" />,
@@ -42,51 +51,69 @@ const homepageProjects: ProjectItem[] = [
   {
     id: "project-02",
     number: "02",
-    title: "Myntra Auto-Lister (Vision AI)",
+    title: "Geographical Sales Density Analyzer",
+    category: "Spatial Analysis & Dark Store Planning",
+    description:
+      "Geospatial demand-density mapping tool analyzing revenue quantity across city quadrants to identify optimal quick-commerce dark store expansion locations.",
+    highlights: [
+      "Recommended 40 optimal dark store locations across city quadrants",
+      "Projected 525%–735% daily order volume growth over current retail stores",
+      "Visualized regional order heatmaps using Python & Folium",
+    ],
+    tags: ["Python", "Geospatial Heatmaps", "Folium", "Demand Analysis"],
+    images: [
+      "/projects/Geographical%20Sales%20Density%20Analyzer/Heatmap_1.png",
+      "/projects/Geographical%20Sales%20Density%20Analyzer/Heatmap_2.png",
+      "/projects/Geographical%20Sales%20Density%20Analyzer/Heatmap_3.png",
+      "/projects/Geographical%20Sales%20Density%20Analyzer/Heatmap_4.png",
+      "/projects/Geographical%20Sales%20Density%20Analyzer/Heatmap_5.png",
+    ],
+    icon: <Globe className="w-5 h-5 text-white" />,
+  },
+  {
+    id: "project-03",
+    number: "03",
+    title: "Myntra Autolister (Vision AI)",
     category: "Generative AI & E-Commerce Automation",
     description:
       "AI-powered catalog automation system using Gemini Vision AI to automatically extract garment attributes, size charts, and listing parameters from product photographs.",
     highlights: [
       "Cut catalog turnaround from 30+ hours to under 2 minutes (>99% reduction)",
       "Automated marketplace listing generation via Myntra REST APIs",
-      "Eliminated manual data entry errors across footwear and apparel categories",
+      "Eliminated manual data entry errors across footwear & apparel categories",
     ],
     tags: ["Python", "Gemini Vision AI", "REST APIs", "FastAPI", "Shopify"],
+    images: [
+      "/projects/Myntra%20Autolister/Myntra-Autolister_1.png",
+      "/projects/Myntra%20Autolister/Myntra-Autolister_2.png",
+      "/projects/Myntra%20Autolister/Myntra-Autolister_3.png",
+    ],
     demoUrl: "https://myntra-auto-lister-production.up.railway.app/",
     githubUrl: "https://github.com/MNegi17/Myntra-Auto-Lister",
     icon: <Sparkles className="w-5 h-5 text-white" />,
   },
   {
-    id: "project-03",
-    number: "03",
-    title: "SKU Return Rate Classifier",
-    category: "Machine Learning & Predictive Modeling",
-    description:
-      "Supervised machine learning classification model built in Python (scikit-learn) to flag high-return SKUs by category, price band, and size trends before fulfillment.",
-    highlights: [
-      "Reduced overall return rate from 47.9% (Q1) to 26.7% (Q4) — a 44% reduction",
-      "Proactive alerts escalated to footwear and apparel design teams",
-      "Integrated demand forecasting with historical order trends",
-    ],
-    tags: ["Python", "Scikit-Learn", "Pandas", "Supervised ML", "Excel"],
-    icon: <Bot className="w-5 h-5 text-white" />,
-  },
-  {
     id: "project-04",
     number: "04",
-    title: "D2C AutoLister Console",
-    category: "Full-Stack Automation & APIs",
+    title: "Automated DSR & Operations Console",
+    category: "Daily Sales Reporting & Workflow Automation",
     description:
-      "Widescreen operational console dashboard connecting Next.js with FastAPI to automate warehouse-to-Shopify product catalog synchronization and status tracking.",
+      "Automated Daily Sales Reporting engine fetching transaction data, Dropbox image links, and warehouse metrics to construct executive DSR summaries.",
     highlights: [
-      "Automated Dropbox image/link fetcher and DSR (Daily Sales Report) generator",
-      "Reduced daily reporting tasks from 2–3 hours down to ~10 minutes",
-      "Real-time webhook notifications for pending action items",
+      "Reduced daily reporting turnaround from 2-3 hours down to 10 minutes",
+      "Automated data ingestion from ERP warehouse logs and D2C marketplaces",
+      "Real-time variance alerts for daily target metrics",
     ],
-    tags: ["Next.js", "FastAPI", "Python", "Shopify D2C", "PostgreSQL"],
+    tags: ["Python", "FastAPI", "Dropbox API", "PostgreSQL", "Shopify D2C"],
+    images: [
+      "/projects/Automated%20DSR/DSR_1.png",
+      "/projects/Automated%20DSR/DSR_2.png",
+      "/projects/Automated%20DSR/DSR_3.png",
+      "/projects/Automated%20DSR/DSR_4.png",
+    ],
     demoUrl: "https://d2c-autolister-pro.up.railway.app/",
     githubUrl: "https://github.com/MNegi17/D2C_AutoLister",
-    icon: <Code className="w-5 h-5 text-white" />,
+    icon: <Bot className="w-5 h-5 text-white" />,
   },
 ];
 
@@ -201,15 +228,8 @@ export const Projects = () => {
               </div>
             </div>
 
-            {/* Media Placeholder Box */}
-            <div className="relative w-full aspect-[16/10] rounded-xl border border-dashed border-neutral-700 bg-neutral-950 flex flex-col items-center justify-center p-4 text-center">
-              <div className="w-10 h-10 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300 mb-2">
-                {project.icon}
-              </div>
-              <span className="font-mono text-xs text-neutral-300 font-semibold uppercase">
-                [ MEDIA PLACEHOLDER ]
-              </span>
-            </div>
+            {/* Photo Gallery Component */}
+            <ProjectImageGallery images={project.images} title={project.title} icon={project.icon} />
 
             {/* Project Details */}
             <div>
@@ -345,26 +365,8 @@ export const Projects = () => {
                 {/* 2-Column Split */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                   <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
-                    <div className="relative w-full aspect-[16/10] rounded-2xl border border-dashed border-neutral-700 bg-neutral-950 overflow-hidden flex flex-col items-center justify-center p-6 text-center shadow-inner">
-                      <div className="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:24px_24px]" />
-
-                      <div className="relative z-10 flex flex-col items-center gap-2.5">
-                        <div className="w-12 h-12 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-300">
-                          {project.icon}
-                        </div>
-                        <span className="font-mono text-xs tracking-widest text-neutral-300 font-semibold uppercase">
-                          [ MEDIA PLACEHOLDER ]
-                        </span>
-                        <span className="text-[11px] font-mono text-neutral-500">
-                          Add project screenshot / video clip
-                        </span>
-                      </div>
-
-                      <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t-2 border-l-2 border-neutral-400 opacity-60" />
-                      <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t-2 border-r-2 border-neutral-400 opacity-60" />
-                      <div className="absolute bottom-3 left-3 w-2.5 h-2.5 border-b-2 border-l-2 border-neutral-400 opacity-60" />
-                      <div className="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-2 border-r-2 border-neutral-400 opacity-60" />
-                    </div>
+                    {/* Interactive Photo Carousel */}
+                    <ProjectImageGallery images={project.images} title={project.title} icon={project.icon} />
 
                     <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
                       {project.title}
